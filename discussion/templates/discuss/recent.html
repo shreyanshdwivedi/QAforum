@@ -1,0 +1,97 @@
+{% extends 'discuss/index.html' %}
+{% load static %}
+{% block navtab %}
+    <ul class="nav nav-tabs" style="width:410px;">
+      <li role="presentation" class="recent"><a href="/recent/">Recent</a></li>
+        <li role="presentation" class="answered"><a href="/answered/">Answered</a></li>
+      <li role="presentation" class="unanswered"><a href="/unanswered/">Unanswered</a></li>
+    </ul>
+<hr style="margin-top:-1px; border-color:#00e6e6;">
+{% endblock navtab %}
+
+{% block ques %}
+{% if queryset %}
+
+    {% for ques in queryset %}
+    <div style=" background-color:white; box-shadow:0 0 10px #cccccc; width:100%;">
+            <div style="width:20%; float:left; padding-top:25px;">
+                {% if ques.user.image is None %}
+                <img class="img-user" src="{% static 'images/user1.png' %}" height="85px" width="85px" style="border-radius:50%;">
+                {% else %}
+                <img class="img-user" src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{ques.user.image}}.png" height="85px" width="85px" style="border-radius:50%;">
+                {% endif %}
+            </div>
+            <div style="width:80%; margin-left:175px;">
+                <div style="padding-top:15px; text-align:left; font-family: 'Satisfy', cursive;">
+                    <a href="/question/details/{{ques.id}}/" style="font-size:24px; color:#00b3b3; text-decoration:none;">
+                        {{ ques.title }}
+                    </a>
+                </div>
+                <div style="font-size:22px; text-align:left; font-family: 'Satisfy', cursive; padding-right: 10px;">
+                    <p class="content-markdown"> {{ ques.description|truncatechars:180}} </p>
+                </div>
+                <hr style="border-color:#bfbfbf; width:92%; margin-left: -1px;"/>
+                <div style="margin-top:-12px; padding-bottom:10px; font-family: 'Satisfy', cursive;">
+                    <span style="font-size:15px; padding-right:25px; color:#666666;">
+                            {% if ques.pk in starred_ques %}
+                                <i class="fa fa-star ques" aria-hidden="true" style="color:#FFD700; cursor: pointer;" data-id="{{ques.pk}}" id="{{ques.pk}}"></i>
+                            {% else %}
+                                <i class="fa fa-star ques" aria-hidden="true" style="color:black; cursor: pointer;" data-id="{{ques.pk}}" id="{{ques.pk}}"></i>
+                            {% endif %}
+                            <span style="font-size:15px;"
+                                <span class="starCount" data-id="{{ques.pk}}">{{ques.stars}}</span> star
+                            </span>
+                    </span>
+                    <span style="font-size:15px; padding-right:25px; color:#666666;"> <i class="fa fa-comments-o" aria-hidden="true"></i> {{ ques.answers }}<span style="font-size:15px;"> answers</span></span>
+                    <span style="font-size:15px; padding-right:25px; color:#666666;"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ ques.pub_date|timesince }}</span>
+                    <span style="font-size:15px; padding-right:25px; color:#666666;"><i class="fa fa-user-o" aria-hidden="true"></i> {{ ques.user.username }}</span>
+                </div>
+            </div>
+    </div>
+    <div style="height:25px;"></div>
+    {% endfor %}
+
+    {% if queryset.has_other_pages %}
+      <ul class="pagination">
+        {% if queryset.has_previous %}
+          <li><a href="?page={{ queryset.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in queryset.paginator.page_range %}
+          {% if queryset.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if queryset.has_next %}
+          <li><a href="?page={{ queryset.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+{% endif %}
+
+{% endblock ques %}
+
+
+{% block sidebar %}
+<div style=" font-family: 'Caveat Brush', cursive; margin-top:-8px;">
+    <h1 style="font-size:25px; color:#00b3b3">Stats</h1>
+    <hr style="margin-top:-8px; border-color:#bfbfbf; width: 85%;">
+    <div style="font-size:20px; text-align: left; margin-left: 20px; padding-bottom:10px;">
+        <i class="fa fa-question-circle" aria-hidden="true"></i> <span style="margin-left:15px;"> Questions</span>
+        <span class="badge" style="margin-left:90px; font-size:15px; background-color:black;">{{allQues.count}}</span>
+    </div>
+    <div style="font-size:20px; text-align: left; margin-left: 20px; padding-bottom:10px;">
+        <i class="fa fa-check" aria-hidden="true"></i><span style="margin-left:15px;"> Answers</span>
+        <span class="badge" style="margin-left:100px; font-size:15px; background-color:black;">{{answers.count}}</span>
+    </div>
+    <div style="font-size:20px; text-align: left; margin-left: 20px; padding-bottom:12px;">
+        <i class="fa fa-users" aria-hidden="true"></i><span style="margin-left:15px;"> Users</span>
+        <span class="badge" style="margin-left:115px; font-size:15px; background-color:black;">{{users.count}}</span>
+    </div>
+</div>
+{% endblock sidebar %}

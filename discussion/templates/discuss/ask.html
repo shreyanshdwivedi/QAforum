@@ -1,0 +1,22 @@
+{% extends "discuss/base.html" %}
+{% block head_extra %}
+    {{ form.media }}
+{% endblock head_extra %}
+
+{% block content %}
+
+<center>
+<form method="post" action="{% url 'discuss:ask' %}" style="width:500px; background-color:white; text-align:left;" class="form-horizontal">
+     {% csrf_token %}
+
+    {% for field in form %}
+        <div class="form-group" style="text-align:left;">
+            <div {% if forloop.last %} style="margin-left:-157px;" {% else %} style="width:500px; margin-left:14px;" {% endif %}>{{ field }}</div>
+        </div>
+    {% endfor %}
+    <center>
+    <input type="submit" class="btn" style="color:#ffffff; background-color:black; font-size:15px;" value="Ask Ques.">
+    </center>
+</form>
+</center>
+{% endblock content %}

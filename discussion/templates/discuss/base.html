@@ -1,0 +1,328 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+        <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+        <script src="https://use.fontawesome.com/19fb39091d.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Caveat+Brush" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Delius+Swash+Caps" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Tillana" rel="stylesheet">
+        <style>
+            .form-control:focus{
+                outline: none !important;
+                border:1px solid #00e6e6;
+            }
+            .form-group{
+                font-weigth: 40px;
+            }
+            .form-control.frm{
+                border-color:#00e6e6;
+            }
+            input[type='checkbox']:checked{
+                color:#00e6e6;
+            }
+            .navbar.navbar-default{
+                background-color:red;
+            }
+            ul.nav.nav-tabs li a{
+                color:#00b3b3;
+            }
+            ul.nav.nav-tabs li.active{
+                border-bottom:0px solid black;
+            }
+            ul.nav.nav-tabs li.active a{
+                 border:1px solid #00e6e6;
+                 border-bottom:1px solid white;
+                 box-shadow:0 0 5px #cccccc;
+            }
+            .active{
+                color: #00e6e6;
+            }
+            .img-user{
+                object-fit: fill;
+            }
+
+
+
+            .update-form {
+              text-align: left;
+              padding-top: 10px;
+            }
+
+            .update-form .form-control{
+                border: 0;
+            }
+
+            .update-form input[type=text], .update-form input[type=email] , .update-form textarea{
+              /* to create space for placing icon*/
+              padding-left: 32px;
+              border-radius: 1px;
+              border: 0;
+              outline: 0;
+              background: transparent;
+              border-bottom: 1px solid #cccccc;
+              font-size:20px;
+            }
+
+            /*position should be relative and z-index greater than one*/
+            .update-form .icon {
+              position: relative;
+              float: left;
+              margin-left: 8px;
+              margin-top: -24px;
+              z-index: 2;
+              color: #8c8c8c;
+            }
+
+            .icon.fa.fa-quote-left.fa-lg{
+              float: left;
+              margin-left: 8px;
+              margin-top: -55px;
+              position: relative;
+              z-index: 2;
+              color: #8c8c8c;
+            }
+
+
+
+            .register-form, .login-form{
+                width:380px;
+                border: 1px solid #00e6e6;
+                padding:20px;
+                background-color:white;
+                font-family: 'Tillana', cursive;
+                font-size: 19px;
+            }
+            .register-form input, .login-form input{
+                font-family: 'Tillana', cursive;
+                font-size: 17.5px;
+            }
+        </style>
+
+        {% block head_extra %} {% endblock head_extra %}
+
+    </head>
+    <body>
+
+    {% block nav %}
+    <nav class="navbar navbar-default navbar-fixed-top opaque-navbar" style="border:1px solid #00e6e6;">
+      <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/recent/" style="cursor: pointer; font-size: 30px; font-family: 'Kaushan Script', cursive; color:black;">
+            <span><img src="{% static 'images/logo.png' %}" height="40px" width="40px" style="margin-top:-10px;"/>
+            Discuss</span>
+        </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right" style="float:right; margin-right:-100px;">
+          <li>
+              <form class="navbar-form" style="float:right;">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn" style="color:#00e6e6; border:2px solid #00e6e6; background-color:white; font-size:12px;">Search</button>
+              </form>
+          </li>
+          <li><a href="/my_account/{{user.id}}/" style="color:black; font-size:20px; font-family: 'Kaushan Script', cursive;">
+              {% if user.image is None %}
+                    <i class="fa fa-user" aria-hidden="true"></i> {{user.username}}
+              {% else %}
+                    <span>
+                        <img src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png" height="34px" width="auto" style="border-radius:2px; margin-bottom:-10px; margin-top:-15px;"> {{user.username}}
+                    </span>
+              {% endif %}
+          </a></li>
+          {% if logged_user %}
+            <li><a href="/logout/" style="color:black; font-size:20px; font-family: 'Kaushan Script', cursive;">Logout</a></li>
+          {% endif %}
+        </ul>
+
+        </div>
+      </div>
+    </nav>
+    {% endblock nav %}
+    <div style="height: 100px;"></div>
+        {% block content %}
+
+        {% endblock content %}
+
+    <div style="height:50px;"></div>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.content-markdown').each(function(){
+                var content = $(this).text();
+                var markedContent = marked(content);
+                $(this).html(markedContent);
+            })
+            $('.content-markdown img').each(function(){
+                $(this).addClass('img-responsive');
+            })
+        })
+
+            $(document).ready(function(){
+               $(document).on('click', ".fa.fa-chevron-up.ques", function(){
+                    var $this = $(this);
+                    var ques_id = $(this).attr('id');
+                    var cl = $(this).attr('class');
+                    $('.fa.fa-chevron-down.ques').removeClass('active');
+                    if (cl.indexOf("active")>=0){
+                        $this.removeClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            data : { ques : ques_id },
+                            success : function(response){
+                                $('.QuesvoteCount').text(response['total']);
+                            }
+                        });
+                    }
+                    else{
+                        $this.addClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            data : { ques : ques_id },
+                            success : function(response){
+                                $('.QuesvoteCount').text(response['total']);
+                            }
+                        });
+                    }
+               });
+               $(document).on('click', ".fa.fa-chevron-down.ques", function(){
+                    var $this = $(this);
+                    var ques_id = $(this).attr('id');
+                    var cl = $(this).attr('class');
+                    $('.fa.fa-chevron-up.ques').removeClass('active');
+                    if (cl.indexOf("active")>=0){
+                        $this.removeClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/downvoteQues",
+                            data : { ques : ques_id },
+                            success : function(response){
+                                $('.QuesvoteCount').text(response['total']);
+                            }
+                        });
+                    }
+                    else{
+                        $this.addClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/downvoteQues/",
+                            data : { ques : ques_id },
+                            success : function(response){
+                                $('.QuesvoteCount').text(response['total']);
+                            }
+                        });
+                    }
+               });
+               $(document).on('click', ".fa.fa-star.ques", function(){
+                    var $this = $(this);
+                    var ques_id = $(this).attr('id');
+                    $.ajax({
+                        type: "GET",
+                        url : "http://127.0.0.1:8080/starQues/",
+                        data : { ques : ques_id },
+                        success : function(response){
+                            if($('.fa.fa-star.ques[data-id='+ques_id+']').css('color') == 'rgb(0, 0, 0)'){
+                                $this.css({ 'color':'#FFD700' });
+                            }
+                            else{
+                                $this.css({ 'color':'black' });
+                            }
+                            $('.starCount[data-id='+ques_id+']').text(response['stars']);
+                        }
+                    });
+               });
+               $(document).on('click', ".fa.fa-chevron-up.ans", function(){
+                    var $this = $(this);
+                    var ans_id = $(this).attr('id');
+                    var ques_id = $(this).attr('data-ques');
+                    var cl = $(this).attr('class');
+                    $('.fa.fa-chevron-down.ans.active').each(function(){
+                        if ($(this).attr('id') == ans_id){
+                            $(this).removeClass('active');
+                        }
+                    });
+                    if (cl.indexOf("active")>=0){
+                        $this.removeClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            data : { ans : ans_id, ques: ques_id },
+                            success : function(response){
+                                $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
+                            }
+                        });
+                    }
+                    else{
+                        $this.addClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            data : { ans : ans_id, ques: ques_id },
+                            success : function(response){
+                                $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
+                            }
+                        });
+                    }
+               });
+               $(document).on('click', ".fa.fa-chevron-down.ans", function(){
+                    var $this = $(this);
+                    var ans_id = $(this).attr('id');
+                    var ques_id = $(this).attr('data-ques');
+                    var cl = $(this).attr('class');
+                    $('.fa.fa-chevron-up.ans.active').each(function(){
+                        if ($(this).attr('id') == ans_id){
+                            $(this).removeClass('active');
+                        }
+                    });
+                    if (cl.indexOf("active")>=0){
+                        $this.removeClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            data : { ans : ans_id, ques: ques_id },
+                            success : function(response){
+                                $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
+                            }
+                        });
+                    }
+                    else{
+                        $this.addClass('active');
+                        $.ajax({
+                            type: "GET",
+                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            data : { ans : ans_id, ques: ques_id },
+                            success : function(response){
+                                $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
+                            }
+                        });
+                    }
+               });
+            })
+        </script>
+</body>
+</html>

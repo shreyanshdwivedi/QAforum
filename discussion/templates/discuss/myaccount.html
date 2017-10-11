@@ -1,0 +1,216 @@
+{% extends 'discuss/base.html' %}
+{% load cloudinary %}
+
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style=" box-shadow:0 0 10px #cccccc; margin-left: -85px; margin-top: -42px; height: 90vh;">
+                <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:18px;">
+                    <div style="float:left; width:auto;">
+                        <img id="Userimagebig" alt="UserImage"
+                         {% if user.image is None %}
+                         src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png"
+                         {% else %}
+                         src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png"
+                         {% endif %}
+                         style="margin-top:25px; border-radius:50%; height: 100px; width: 100px;">
+
+                        <div style="position:relative; left:65px; top:-25px;">
+                            <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal"
+                                data-target="#changeImageModal" id="changeImageButton"
+                                data-tooltip="tooltip" data-placement="bottom" title="Change Image" style="border-radius: 60%; height: 30px; width: 30px;">
+                                <i class="fa fa-camera" aria-hidden="true" style="font-size: 15px; position:relative; left:-3.5px;"></i>
+                            </button>
+                         </div>
+                     </div>
+
+                    <div style="float:left; margin-left: 20px;">
+                        <div style="height:40px;"></div>
+                        <b>
+                        <div style="width: auto; text-align:center; float:left;">
+                            8<br> question
+                        </div>
+                        <div style="width: auto; text-align:center; float:left; padding-left:25px;">
+                            8<br> followers
+                        </div>
+                        <div style="width: auto; text-align:center; float:left; padding-left:25px;">
+                            8<br> following
+                        </div><br><br></b>
+                        <div style="height: 35px; width:auto; margin-top:10px; text-align:center; border: solid 1px; border-radius:5px; font-size:20px; padding:1.5px; cursor: pointer;"
+                             data-toggle="modal"
+                            data-target="#changePasswordModal" id="changePasswordButton"
+                            data-tooltip="tooltip" data-placement="bottom" title="Change Password">
+                            <i class="fa fa-unlock-alt" aria-hidden="true" style="font-size: 20px; margin-top: 5px;"></i> &nbsp;
+                            Change Your Password
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div id="left-wrapper-username" style="padding-left: 10px; font-family: 'Tillana', cursive; font-size:22px;">
+                    <b>{{ user.name }}</b><br/>
+                    <div style="font-size:18px;" class="profile-bio">{{user.bio|linebreaksbr}}</div>
+                </div>
+
+                <hr style="margin-top:-0.25px; border-color:#cccccc; width: 95%;">
+
+                <div class="container">
+                  <form role="form " action="{% url 'discuss:update' user.id%}" method="post" style="width: 340px; font-family: 'Tillana', cursive;" class="update-form">
+
+                    {% csrf_token %}
+                     <div class="form-group">
+                      <label for="name"></label>
+                      <input type="text" class="form-control" id="name" name="name" value="{{user.name}}" required>
+                      <!--placing icon using a span element-->
+                      <span class="icon fa fa-id-card-o fa-lg"></span>
+                    </div>
+                    <div class="form-group">
+                      <label for="name"></label>
+                      <input type="text" class="form-control" id="name" name="username" value="{{user.username}}" required>
+                      <!--placing icon using a span element-->
+                      <span class="icon fa fa-user fa-lg"></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="email"></label>
+                      <input type="email" class="form-control" id="email" name="email" value="{{user.email}}" required>
+                      <span class="icon fa fa-envelope fa-lg"></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="sub"></label>
+                        <textarea class="form-control" rows="2" data-adaptheight id="sub" name="bio" required>{{user.bio|safe}}</textarea>
+                      <span class="icon fa fa-quote-left fa-lg"></span>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                      <textarea rows="5" cols="30" id="msg" name="msg" placeholder="Message" style="width:100%"></textarea>
+                      <span class="icon-textarea fa fa-paper-plane fa-lg "></span>
+                    </div>
+                    -->
+                    <center>
+                        <input type="submit" class="btn" style="color:#ffffff; background-color:black; font-size:20px; text-align:center; border-radius:10px;" value="Update">
+                    </center>
+                  </form>
+
+                </div>
+
+
+                <!-- New Post trigger modal
+                <button type="button" class="btn btn-success btn-lg btn-block" id="write" style="margin-top: 10px;"
+                        data-toggle="modal" data-target="#newPostModal">Write Something <i class="fa fa-pencil"
+                                                                                      aria-hidden="true"></i></button>
+
+                <button type="button" class="btn btn-info btn-lg btn-block" id="goPodium" style="margin-top: 10px;">The
+                    Podium <i class="fa fa-microphone" aria-hidden="true"></i></button>-->
+            </div>
+
+            <!-- Password Change Modal -->
+            <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+                 aria-labelledby="changePasswordModalLabel">
+                <div class="modal-dialog" role="document" style="width: 380px; height: auto; max-height:100%; margin-top:50px; font-family: 'Satisfy', cursive; font-size:20px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Change Password</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{% url 'discuss:change_pass' user.id%}" style="width:350px; background-color:white; font-family: 'Tillana', cursive; font-size:20px;">
+                               {% csrf_token %}
+                              <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword"
+                                           placeholder="Write Your Current Password" style="font-family: 'Tillana', cursive; font-size:17px;" name="current">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" class="form-control" name="new" id="newPassword"
+                                           placeholder="Write Your New Password" style="font-family: 'Tillana', cursive; font-size:17px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" class="form-control" name="confirm_new" id="confirmPassword"
+                                           placeholder="Write Your New Password Again" style="font-family: 'Tillana', cursive; font-size:17px;">
+                                </div>
+                               <center>
+                                    <input type="submit" class="btn" style="color:#ffffff; background-color:black; font-size:20px;" value="Change Password.">
+                                </center>
+                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Image Change Modal -->
+            <div class="modal fade" id="changeImageModal" tabindex="-1" role="dialog"
+                 aria-labelledby="changeImageModalLabel">
+                <div class="modal-dialog" role="document" style="font-family: 'Satisfy', cursive; font-size:20px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Change Profile Image</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'discuss:set_image' user.id %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <center><input type="file" name="image" class="file"></center>
+                                </div>
+                                <center>
+                                    <input type="submit" class="btn" style="color:#ffffff; background-color:black; font-size:20px;" value="Change Pic.">
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Post Modal -->
+            <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Start Writing</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="author-name" class="col-sm-2 control-label">Author</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="author-name" placeholder="Author Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title-name" class="col-sm-2 control-label">Title</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="title-name"
+                                               placeholder="Title">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="main-body" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" rows="10" id="main-body"
+                                                  placeholder="Pour your thoughts here"></textarea>
+                                    </div>
+                                </div>
+                                <p style="color: #e62222" id="newPostError"></p>
+                            </form>
+                            <button class="btn btn-success" style="margin-left: 250px;" id="newPostSubmit"
+                                    data-loading-text="Submitting..." autocomplete="off">Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

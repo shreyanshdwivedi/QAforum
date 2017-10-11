@@ -1,0 +1,82 @@
+{% extends 'discuss/base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {% block head_extra_index %}
+
+    {% endblock head_extra_index %}
+{% endblock head_extra %}
+
+{% block content %}
+<center>
+<div class="container">
+    <div class="row" style="height:200px;border:1px solid #00e6e6; background-color:white; ">
+        <div class="col-md-2" style="background-color:#00e6e6;">
+            <img src="{% static 'images/logo.png' %}" height="200px" weight="200px" style="float:left; margin-left:-18px;"/>
+        </div>
+        <div class="col-md-3" style="font-family: 'Caveat Brush', cursive; font-size:20px; padding-top: 20px;">
+            DISCUSS is a question and answer site for computer enthusiasts and power users. Join them; it only takes a minute:<br>
+            <center>
+                <a href="/register/"><button class="btn" style="color:#ffffff; background-color:black; font-size:20px;">SignUp</button></a>
+            </center>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <img src="{% static 'images/ask1.png' %}" height="180px" weight="200px" style="float:left;box-shadow:0 0 5px #cccccc; margin-top: 10px;"/>
+        </div>
+        <div class="col-md-2"style="font-family: 'Caveat Brush', cursive; font-size:20px; padding-top: 20px;">
+            You can ask us anything related to technology and programming...<br>
+
+            <center>
+                <a href="/ask/"><button class="btn" style="color:#ffffff; background-color:black; font-size:20px;">Ask Us</button></a>
+            </center>
+            <!--<a href="{% url 'discuss:ask' %}">
+                <button class="btn" data-toggle="modal" data-target="#myModal" style="color:#ffffff; background-color:black; font-size:20px;">AskUs</button>
+            </a>
+                <!--    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document" style="width: 28%; height: auto; max-height:100%;">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ask Us</h4>
+                      </div>
+                      <div class="modal-body">
+                            <form method="post" action="{% url 'discuss:ask' %}" style="width:350px; background-color:white;">
+                               {% csrf_token %}
+                              <div class="form-group">
+                                <label for="exampleInput" style="float:left;">Title:</label>
+                                <input type="text" class="form-control" id="exampleInput" placeholder="Title" name="title">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1" style="float:left;">Question:</label>
+                                <textarea class="form-control" rows="7" name="question" id="exampleInputPassword1" placeholder="Ask.."></textarea>
+                              </div>
+                               <center>
+                                    <input type="submit" class="btn" style="color:#ffffff; background-color:black; font-size:15px;" value="Ask Ques.">
+                                </center>
+                             </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            -->
+        </div>
+    </div>
+</div>
+    <br/>
+<div class="container">
+    {% block navtab %} {% endblock navtab %}
+    <div class="row">
+        <div class="col-md-9 col-sm-12">
+            {% block ques %} {% endblock ques %}
+        </div>
+        <div class="col-md-3 col-sm-0" style=" box-shadow: 0 0 10px #cccccc;">
+            {% block sidebar %} {% endblock %}
+        </div>
+    </div>
+</div>
+</center>
+<script>
+    $('.{{set_active}}').addClass('active');
+</script>
+{% endblock %}

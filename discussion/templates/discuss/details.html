@@ -1,0 +1,128 @@
+{% extends 'discuss/index.html' %}
+{% block head_extra_index %}
+    {{ answer_form.media }}
+{% endblock head_extra_index %}
+{% block ques %}
+<div style="box-shadow:0 0 5px #cccccc;">
+    <div style="width:10%; font-size: 23px; float:left; height: 180px; padding-top:25px; color: black;font-family: 'Satisfy', cursive;">
+        <div class="upvote ques" style="cursor:pointer; color:black;">
+            {% if is_upvoted == True %}
+                <i class="fa fa-chevron-up ques active" aria-hidden="true" id="{{ques.pk}}"></i>
+            {% else %}
+                <i class="fa fa-chevron-up ques" aria-hidden="true" id="{{ques.pk}}"></i>
+            {% endif %}
+        </div>
+        <div class="QuesvoteCount">{% include 'discuss/quesVotes.html' %}</div>
+        <div class="downvote ques" style="cursor:pointer; color:black;">
+            {% if is_downvoted == True %}
+                <i class="fa fa-chevron-down ques active" aria-hidden="true" id="{{ques.pk}}"></i>
+            {% else %}
+                <i class="fa fa-chevron-down ques" aria-hidden="true" id="{{ques.pk}}"></i>
+            {% endif %}
+        </div>
+        <div style="padding-top:15px; cursor: pointer;">
+            {% if is_starred == True %}
+                <i class="fa fa-star ques" aria-hidden="true" style="color:#FFD700;" id="{{ques.pk}}" data-id="{{ques.pk}}"></i>
+            {% else %}
+                <i class="fa fa-star ques" aria-hidden="true" style="color: black;" id="{{ques.pk}}" data-id="{{ques.pk}}"></i>
+            {% endif %}
+            <div style="font-size:15px;" class="starCount" data-id="{{ques.pk}}">{{ques.stars}}</div>
+        </div>
+    </div>
+    <div style="width:90%; text-align:left; font-size: 25px; padding-top:25px;font-family: 'Satisfy', cursive;">
+        <p class="content-markdown"> {{ ques.description }} </p>
+        <span style="float:right;">
+            {{ ques.pub_date|timesince }} ago -&nbsp;
+            <a href="" style="float:right;"> {{ques.user}} </a>
+        </span>
+        <br>
+        <hr style="border-color:#bfbfbf;">
+        <div class="comments" style="padding-bottom:10px;">
+        {% if allComments %}
+            {% for comments in allComments %}
+                <div style="font-size:19px; margin-left:100px;">
+                    {{ comments.comment }}<br/>
+                    <span style="float:right;">
+                        {{ comments.pub_date|timesince }} -&nbsp;
+                        <a href="" style="float:right;"> {{comments.user}} </a>
+                    </span><br>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% endif %}
+            <div>
+                <form method="post" action="/comment/{{ques.id}}/">
+                    {% csrf_token %}
+                    <textarea rows="2" name="comment" style="width:82%;"></textarea>
+                    <input type="submit" class="btn" value="Comment" style="margin-top:-25px;">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:30px;"></div>
+<div style="box-shadow:0 0 5px #cccccc; padding-bottom:10px;font-family: 'Satisfy', cursive;" class="answers">
+    {% if allAnswers %}
+        {% for ans in allAnswers %}
+            <div style="width:10%; font-size: 22px; float:left; height: 140px; padding-top:25px;">
+
+                 <div class="upvote ans" style="cursor:pointer; color:black;">
+                    {% if ans.pk in upvotedAns %}
+                        <i class="fa fa-chevron-up ans active" aria-hidden="true" id="{{ans.pk}}" data-ques="{{ques.pk}}"></i>
+                    {% else %}
+                        <i class="fa fa-chevron-up ans" aria-hidden="true" id="{{ans.pk}}" data-ques="{{ques.pk}}"></i>
+                    {% endif %}
+
+                </div>
+                <div class="ansvoteCount" data-id="{{ans.pk}}">{{ans.total}}</div>
+                <div class="downvote ans" style="cursor:pointer; color:black;">
+                    {% if ans.pk in downvotedAns %}
+                        <i class="fa fa-chevron-down ans active" aria-hidden="true" id="{{ans.pk}}" data-ques="{{ques.pk}}"></i>
+                    {% else %}
+                        <i class="fa fa-chevron-down ans" aria-hidden="true" id="{{ans.pk}}" data-ques="{{ques.pk}}"></i>
+                    {% endif %}
+                </div>
+
+                <div class="check">
+                    {% if ques.user.username == logged_user %}
+                    <a href="/checkAns/{{ans.pk}}/{{ques.pk}}/">
+                        {% if ans.answer == False %}
+                            <i class="fa fa-check" aria-hidden="true" style="font-size:28px; font-weight:100px; margin-top:20px; color:black;" id="{{ans.pk}}"></i>
+                        {% else %}
+                        <i class="fa fa-check" aria-hidden="true" style="font-size:28px; font-weight:100px; margin-top:20px; color:green;" id="{{ans.pk}}"></i>
+                        {% endif %}
+                    </a>
+                    {% else %}
+                        {% if ans.answer == True %}
+                            <i class="fa fa-check" aria-hidden="true" style="font-size:28px; font-weight:100px; margin-top:20px; color:green;"></i>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div style="width:90%; text-align:left; font-size: 22px; padding-top:25px;">
+                <p class="content-markdown"> {{ ans.answer_text|linebreaks }} </p>
+                <span style="float:right;">
+                    {{ ans.pub_date|timesince }} -&nbsp;
+                    <a href="" style="float:right;"> {{ans.user}} </a>
+                </span><br/>
+                <hr style="border-color:#bfbfbf;">
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div>
+        <h3 style="padding-top:20px; text-align:left; margin-left:40px;">Your Answer:</h3>
+        <form method="post" action="/answer/{{ques.id}}/" style="font-size:22px; text-align:left;">
+             {% csrf_token %}
+            {% for field in answer_form %}
+                <div class="form-group" style="text-align:left;">
+                    {{ field }}
+                </div>
+            {% endfor %}
+        <center>
+             <input type="submit" class="btn" value="Answer">
+        </center>
+        </form>
+    </div>
+</div>
+
+{% endblock ques %}
