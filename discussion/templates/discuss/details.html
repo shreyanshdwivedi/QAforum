@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div style="width:90%; text-align:left; font-size: 22px; padding-top:25px;">
-                <p class="content-markdown"> {{ ans.answer_text|linebreaks }} </p>
+                <p class="content-markdown"> {{ ans.answer_text }} </p>
                 <span style="float:right;">
                     {{ ans.pub_date|timesince }} -&nbsp;
                     <a href="" style="float:right;"> {{ans.user}} </a>
@@ -110,7 +110,7 @@
         {% endfor %}
     {% endif %}
     <div>
-        <h3 style="padding-top:20px; text-align:left; margin-left:40px;">Your Answer:</h3>
+        <h3 style="padding-top:20px; text-align:left; margin-left:40px;">Your Answer:</h3> <p> ( Use &lt;br/&gt; for new line ) </p> 
         <form method="post" action="/answer/{{ques.id}}/" style="font-size:22px; text-align:left;">
              {% csrf_token %}
             {% for field in answer_form %}
@@ -119,7 +119,7 @@
                 </div>
             {% endfor %}
         <center>
-             <input type="submit" class="btn" value="Answer">
+             <input type="submit" class="btn" value="Answer"><br/>
         </center>
         </form>
     </div>

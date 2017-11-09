@@ -173,7 +173,7 @@ def recent(request):
         users = User.objects.all()
         logged_user = request.session['username']
         page = request.GET.get('page', 1)
-        paginator = Paginator(query, 3)
+        paginator = Paginator(query, 7)
         allQues = Question.objects.all()
         try:
             queryset = paginator.page(page)
@@ -261,7 +261,7 @@ def answer(request, ques):
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
-            answer = form.cleaned_data['answer']
+            answer = form.cleaned_data['answer_text']
             newAns = Answer.objects.create(question=question, user=user, answer_text=answer)
             question.answers += 1
             question.save()
@@ -418,6 +418,7 @@ def details(request, ques):
     question = Question.objects.get(pk=ques)
     if User.objects.filter(username=request.session['username']).exists():
         user = User.objects.get(username=request.session['username'])
+	username = request.session['username']
     else:
         user = None
     if UpVoteQues.objects.filter(question=question, user=user).exists():
@@ -449,6 +450,7 @@ def details(request, ques):
         'downvotedAns':downvotedAns,
         'upvotedAns':upvotedAns,
         'answer_form':answer_form,
+	'username': username, 
     }
     return render(request, 'discuss/details.html', context)
 

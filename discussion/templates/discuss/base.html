@@ -144,7 +144,7 @@
           </li>
           <li><a href="/my_account/{{user.id}}/" style="color:black; font-size:20px; font-family: 'Kaushan Script', cursive;">
               {% if user.image is None %}
-                    <i class="fa fa-user" aria-hidden="true"></i> {{user.username}}
+                    <i class="fa fa-user" aria-hidden="true"></i> {{username}}
               {% else %}
                     <span>
                         <img src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png" height="34px" width="auto" style="border-radius:2px; margin-bottom:-10px; margin-top:-15px;"> {{user.username}}
@@ -177,6 +177,10 @@
                 $(this).html(markedContent);
             })
             $('.content-markdown img').each(function(){
+		var link = $(this).text();
+		console.log(link);
+		link += "?raw=true";
+		$(this).text(link);
                 $(this).addClass('img-responsive');
             })
         })
