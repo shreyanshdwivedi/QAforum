@@ -195,7 +195,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -206,7 +206,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -223,7 +223,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteQues",
+                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteQues",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -234,7 +234,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteQues/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -247,7 +247,7 @@
                     var ques_id = $(this).attr('id');
                     $.ajax({
                         type: "GET",
-                        url : "http://127.0.0.1:8080/starQues/",
+                        url : "https://fierce-plateau-75843.herokuapp.com/starQues/",
                         data : { ques : ques_id },
                         success : function(response){
                             if($('.fa.fa-star.ques[data-id='+ques_id+']').css('color') == 'rgb(0, 0, 0)'){
@@ -274,7 +274,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -285,7 +285,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -307,7 +307,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -318,7 +318,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
