@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -83,16 +84,20 @@ WSGI_APPLICATION = 'discussion_desk.wsgi.application'
 #    }
 #}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'discussion',
-        'USER': 'shreyansh007',
-        'PASSWORD': 'Suraj@01',
-        'HOST': 'fierce-plateau-75843.herokuapp.com',
-        'PORT': '5432',
-    }
-}
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#       'NAME': 'discussion',
+#        'USER': 'shreyansh007',
+#        'PASSWORD': 'Suraj@01',
+#        'HOST': 'fierce-plateau-75843.herokuapp.coms',
+#        'PORT': '5432',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
