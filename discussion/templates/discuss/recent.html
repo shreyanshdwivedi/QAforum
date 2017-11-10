@@ -1,12 +1,12 @@
 {% extends 'discuss/index.html' %}
 {% load static %}
 {% block navtab %}
-    <ul class="nav nav-tabs" style="width:410px;">
+    <ul class="nav nav-tabs">
       <li role="presentation" class="recent"><a href="/recent/">Recent</a></li>
         <li role="presentation" class="answered"><a href="/answered/">Answered</a></li>
       <li role="presentation" class="unanswered"><a href="/unanswered/">Unanswered</a></li>
     </ul>
-<hr style="margin-top:-1px; border-color:#00e6e6;">
+<hr style="margin-top:-1px; border-color:#00e6e6; width: 98%;">
 {% endblock navtab %}
 
 {% block ques %}
@@ -14,23 +14,23 @@
 
     {% for ques in queryset %}
     <div style=" background-color:white; box-shadow:0 0 10px #cccccc; width:100%;">
-            <div style="width:20%; float:left; padding-top:25px;">
+            <div style="width:20%; float:left; padding-top:25px;" class="hidePlease">
                 {% if ques.user.image is None %}
                 <img class="img-user" src="{% static 'images/user1.png' %}" height="85px" width="85px" style="border-radius:50%;">
                 {% else %}
                 <img class="img-user" src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{ques.user.image}}.png" height="85px" width="85px" style="border-radius:50%;">
                 {% endif %}
             </div>
-            <div style="width:80%; margin-left:175px;">
-                <div style="padding-top:15px; text-align:left; font-family: 'Satisfy', cursive;">
-                    <a href="/question/details/{{ques.id}}/" style="font-size:24px; color:#00b3b3; text-decoration:none;">
+            <div class="quesTitle">
+                <div style="padding-top:15px; text-align:left; font-family: 'Satisfy', cursive;" class="titleQues">
+                    <a href="/question/details/{{ques.id}}/" style="color:#00b3b3; text-decoration:none;">
                         {{ ques.title }}
                     </a>
                 </div>
-                <div style="font-size:22px; text-align:left; font-family: 'Satisfy', cursive; padding-right: 10px;">
+                <div style="text-align:left; font-family: 'Satisfy', cursive; padding-right: 10px;">
                     <p class="content-markdown"> {{ ques.description|truncatechars:180}} </p>
                 </div>
-                <hr style="border-color:#bfbfbf; width:92%; margin-left: -1px;"/>
+                <hr style="border-color:#bfbfbf; width:97%; margin-left: -1px;"/>
                 <div style="margin-top:-12px; padding-bottom:10px; font-family: 'Satisfy', cursive;">
                     <span style="font-size:15px; padding-right:25px; color:#666666;">
                             {% if ques.pk in starred_ques %}

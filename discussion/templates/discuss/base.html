@@ -4,7 +4,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -56,7 +55,10 @@
                 object-fit: fill;
             }
 
-
+            .quesTitle{
+                 margin-left:175px;
+                 width:80%;
+            }
 
             .update-form {
               text-align: left;
@@ -97,7 +99,9 @@
               color: #8c8c8c;
             }
 
-
+            .nav.nav-tabs{
+                width:410px;
+            }
 
             .register-form, .login-form{
                 width:380px;
@@ -111,6 +115,64 @@
                 font-family: 'Tillana', cursive;
                 font-size: 17.5px;
             }
+
+            .titleQues > a{
+                font-size:24px;
+            }
+            .content-markdown{
+                font-size:22px;
+            }
+            .profileEditor{
+                margin-left: -85px; margin-top: -42px; height: 90vh;
+            }
+            .UserImage{
+                margin-top:25px; border-radius:50%; height: 100px; width: 100px;
+            }
+            .cameraBtn{
+                left:65px; 
+            }
+
+            @media screen and (max-width: 600px)
+            {
+                .hidePlease, .sidebar{
+                    display: none;
+                }
+                .askBtn{
+                    width: 100%;
+                }
+                .quesTitle{
+                     margin-left:2%;
+                     width:90%;
+                }
+                .nav.nav-tabs{
+                    width: 100%;
+                }
+                .titleQues > a{
+                    font-size:21px;
+                }
+                .content-markdown{
+                    font-size:20px;
+                }
+                .profileEditor{
+                    margin-left: 10px; margin-top: -40px; width: 100%;
+                }
+                .UserImage{
+                    margin-top:25px; border-radius:50%; height: 50px; width: 50px; 
+                }
+                .Userimagebig{
+                    height: 80px;
+                    width: 80px;
+                }
+                .cameraBtn{
+                    left:45px;
+                }
+                .modal-dialog{
+                    width: 90%;
+                }
+                .passChangeForm{
+                    width: 100%;
+                }
+            }
         </style>
 
         {% block head_extra %} {% endblock head_extra %}
@@ -119,6 +181,7 @@
     <body>
 
     {% block nav %}
+
     <nav class="navbar navbar-default navbar-fixed-top opaque-navbar" style="border:1px solid #00e6e6;">
       <div class="container">
         <div class="navbar-header">
@@ -133,18 +196,10 @@
         </a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right" style="float:right; margin-right:-100px;">
-          <li>
-              <form class="navbar-form" style="float:right;">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn" style="color:#00e6e6; border:2px solid #00e6e6; background-color:white; font-size:12px;">Search</button>
-              </form>
-          </li>
+        <ul class="nav navbar-nav navbar-right">
           <li><a href="/my_account/{{user.id}}/" style="color:black; font-size:20px; font-family: 'Kaushan Script', cursive;">
               {% if user.image is None %}
-                    <i class="fa fa-user" aria-hidden="true"></i> {{username}}
+                    <i class="fa fa-user" aria-hidden="true"></i> {{user.username}}
               {% else %}
                     <span>
                         <img src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png" height="34px" width="auto" style="border-radius:2px; margin-bottom:-10px; margin-top:-15px;"> {{user.username}}
@@ -159,6 +214,7 @@
         </div>
       </div>
     </nav>
+
     {% endblock nav %}
     <div style="height: 100px;"></div>
         {% block content %}
@@ -195,7 +251,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteQues/",
+                            url : "http://127.0.0.1:8080/upvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -206,7 +262,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteQues/",
+                            url : "http://127.0.0.1:8080/upvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -223,7 +279,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteQues",
+                            url : "http://127.0.0.1:8080/downvoteQues",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -234,7 +290,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteQues/",
+                            url : "http://127.0.0.1:8080/downvoteQues/",
                             data : { ques : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -247,7 +303,7 @@
                     var ques_id = $(this).attr('id');
                     $.ajax({
                         type: "GET",
-                        url : "https://fierce-plateau-75843.herokuapp.com/starQues/",
+                        url : "http://127.0.0.1:8080/starQues/",
                         data : { ques : ques_id },
                         success : function(response){
                             if($('.fa.fa-star.ques[data-id='+ques_id+']').css('color') == 'rgb(0, 0, 0)'){
@@ -274,7 +330,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteAns/",
+                            url : "http://127.0.0.1:8080/upvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -285,7 +341,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/upvoteAns/",
+                            url : "http://127.0.0.1:8080/upvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -307,7 +363,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteAns/",
+                            url : "http://127.0.0.1:8080/downvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -318,7 +374,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "https://fierce-plateau-75843.herokuapp.com/downvoteAns/",
+                            url : "http://127.0.0.1:8080/downvoteAns/",
                             data : { ans : ans_id, ques: ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);

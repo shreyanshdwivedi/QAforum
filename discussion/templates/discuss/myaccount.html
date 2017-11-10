@@ -7,18 +7,18 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4" style=" box-shadow:0 0 10px #cccccc; margin-left: -85px; margin-top: -42px; height: 90vh;">
-                <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:18px;">
-                    <div style="float:left; width:auto;">
-                        <img id="Userimagebig" alt="UserImage"
+            <div class="col-md-4 profileEditor" style=" box-shadow:0 0 10px #cccccc;">
+                <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:16px;">
+                    <div style="float:left; width:auto;" class="UserImage">
+                        <img id="Userimagebig" alt="UserImage" class="Userimagebig" 
                          {% if user.image is None %}
                          src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png"
                          {% else %}
                          src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png"
                          {% endif %}
-                         style="margin-top:25px; border-radius:50%; height: 100px; width: 100px;">
+                         >
 
-                        <div style="position:relative; left:65px; top:-25px;">
+                        <div style="position:relative; top:-25px;" class="cameraBtn">
                             <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal"
                                 data-target="#changeImageModal" id="changeImageButton"
                                 data-tooltip="tooltip" data-placement="bottom" title="Change Image" style="border-radius: 60%; height: 30px; width: 30px;">
@@ -111,7 +111,7 @@
             <!-- Password Change Modal -->
             <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
                  aria-labelledby="changePasswordModalLabel">
-                <div class="modal-dialog" role="document" style="width: 380px; height: auto; max-height:100%; margin-top:50px; font-family: 'Satisfy', cursive; font-size:20px;">
+                <div class="modal-dialog" role="document" style="height: auto; max-height:100%; margin-top:50px; font-family: 'Satisfy', cursive; font-size:20px;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -119,7 +119,7 @@
                             <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Change Password</h4>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="{% url 'discuss:change_pass' user.id%}" style="width:350px; background-color:white; font-family: 'Tillana', cursive; font-size:20px;">
+                            <form method="post" action="{% url 'discuss:change_pass' user.id%}" style="background-color:white; font-family: 'Tillana', cursive; font-size:20px;" class="passChangeForm">
                                {% csrf_token %}
                               <div class="form-group">
                                     <label for="currentPassword">Current Password</label>
