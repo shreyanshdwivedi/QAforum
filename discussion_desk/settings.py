@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'discussion',
         'USER': 'shreyansh007',
         'PASSWORD': 'Suraj@01',
-        'HOST': 'https://fierce-plateau-75843.herokuapp.com/',
+        'HOST': 'fierce-plateau-75843.herokuapp.com',
         'PORT': '5432',
     }
 }
