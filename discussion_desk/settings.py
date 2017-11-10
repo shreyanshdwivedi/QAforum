@@ -132,4 +132,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/Users/dell/Desktop/discussion_desk/static_cdn/"
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static_cdn'))
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
