@@ -420,7 +420,7 @@ def details(request, ques):
     question = Question.objects.get(pk=ques)
     if User.objects.filter(username=request.session['username']).exists():
         user = User.objects.get(username=request.session['username'])
-	username = request.session['username']
+	    #username = request.session['username']
     else:
         user = None
     if UpVoteQues.objects.filter(question=question, user=user).exists():
