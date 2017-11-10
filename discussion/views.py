@@ -247,7 +247,7 @@ def ask(request):
             form = AskQues(request.POST)
             if form.is_valid():
                 description = form.cleaned_data['description']
-		title = form.cleaned_data['title']
+				title = form.cleaned_data['title']
                 newQues = Question.objects.create(user=user, title=title, description=description)
                 #newQues.save()
                 return HttpResponseRedirect(reverse('discuss:recent'))
