@@ -33,7 +33,7 @@ class Answer(models.Model):
     answer_text = models.TextField()
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     updated = models.DateTimeField('date updated', auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     answer = models.BooleanField(default=False)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)

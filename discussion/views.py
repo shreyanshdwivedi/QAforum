@@ -103,7 +103,7 @@ def myAccount(request, user_id):
 
 
 def update(request, user_id):
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, pk=user_id)
     logged_user = user.username
     form = UpdateForm()
     if request.method == "POST":
@@ -122,7 +122,7 @@ def update(request, user_id):
 
 
 def change_pass(request, user_id):
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, pk=user_id)
     if request.method == "POST":
         form = ChangePass(request.POST)
         if form.is_valid():
@@ -166,7 +166,7 @@ def recent(request):
     if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
         return HttpResponseRedirect(reverse('discuss:login'))
     else:
-        user = User.objects.get(username=request.session['username'])
+        user = get_object_or_404(User, username=request.session['username'])
         query = Question.objects.all().order_by('-pub_date')
         answers = Answer.objects.all().order_by('-pub_date')
         starred_ques = AddStar.objects.filter(user=user).values_list('question', flat=True)
@@ -195,7 +195,7 @@ def recent(request):
         return render(request, 'discuss/recent.html', context)
 
 def answered(request):
-    user = User.objects.get(username=request.session['username'])
+    user = get_object_or_404(User, username=request.session['username'])
     answers = Answer.objects.all().order_by('-pub_date')
     users = User.objects.all()
     query = Question.objects.exclude(answers=0)
@@ -221,7 +221,7 @@ def answered(request):
     return render(request, 'discuss/recent.html', context)
 
 def unanswered(request):
-    user = User.objects.get(username=request.session['username'])
+    user = get_object_or_404(User, username=request.session['username'])
     answers = Answer.objects.all().order_by('-pub_date')
     users = User.objects.all()
     query = Question.objects.filter(answers=0)
@@ -238,6 +238,7 @@ def unanswered(request):
     return render(request, 'discuss/recent.html', {'queryset': queryset, 'set_active':'unanswered', 'allQues':allQues, 'answers':answers, 'users':users, 'starred_ques':starred_ques,})
 
 def ask(request):
+    user = get_object_or_404(User, username=request.session['username'])
     if 'is_logged_in' not in request.session or request.session['is_logged_in'] == False:
         error_msg = "Login First!!"
         return render(request, 'discuss/login.html', {'error_msg': error_msg})
@@ -245,10 +246,11 @@ def ask(request):
         if request.method == 'POST':
             form = AskQues(request.POST)
             if form.is_valid():
-                form.save()
-                #newQues.user = User.objects.get(username=request.session['username'])
+                description = form.cleaned_data['description']
+		title = form.cleaned_data['title']
+                newQues = Question.objects.create(user=user, title=title, description=description)
                 #newQues.save()
-                return render(request, 'discuss/ask.html', {'form':form})
+                return HttpResponseRedirect(reverse('discuss:recent'))
             else:
                 return render(request, 'discuss/ask.html', {'form':form})
         else:
@@ -256,8 +258,8 @@ def ask(request):
             return render(request, 'discuss/ask.html', {'form':form})
 
 def answer(request, ques):
-    question = Question.objects.get(pk=ques)
-    user = User.objects.get(username=request.session['username'])
+    question = get_object_or_404(Question, pk=ques)
+    user = get_object_or_404(User, username=request.session['username'])
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -283,15 +285,15 @@ def vote(request, ques):
 def quesVotes(request):
     if request.method == "GET":
         ques = request.GET['ques']
-        question = Question.objects.get(pk=ques)
+        question = get_object_or_404(Question, pk=ques)
         votes = question.total
         return render(request, 'quesVotes.html', {'votes':votes})
 
 def VoteUpQues(request):
     if request.method == "GET":
         ques = request.GET['ques']
-        question = Question.objects.get(pk=ques)
-        user = User.objects.get(username=request.session['username'])
+        question = get_object_or_404(Question, pk=ques)
+        user = get_object_or_404(User, username=request.session['username'])
         if DownVoteQues.objects.filter(user=user, question=question).exists():
             obj = DownVoteQues.objects.filter(user=user, question=question)
             obj.delete()
@@ -317,9 +319,9 @@ def VoteUpAns(request):
     if request.method == "GET":
         ans = request.GET['ans']
         ques = request.GET['ques']
-        answer = Answer.objects.get(pk=ans)
-        user = User.objects.get(username=request.session['username'])
-        question = Question.objects.get(pk=ques)
+        answer = get_object_or_404(Answer, pk=ans)
+        user = get_object_or_404(User, username=request.session['username'])
+        question = get_object_or_404(Question, pk=ques)
         if DownVoteAns.objects.filter(user=user, answer=answer).exists():
             obj = DownVoteAns.objects.filter(user=user, answer=answer)
             obj.delete()
@@ -344,8 +346,8 @@ def VoteUpAns(request):
 def VoteDownQues(request):
     if request.method == "GET":
         ques = request.GET['ques']
-        question = Question.objects.get(pk=ques)
-        user = User.objects.get(username=request.session['username'])
+        question = get_object_or_404(Question, pk=ques)
+        user = get_object_or_404(User, username=request.session['username'])
         if UpVoteQues.objects.filter(user=user, question=question).exists():
             obj = UpVoteQues.objects.get(user=user, question=question)
             obj.delete()
@@ -373,9 +375,9 @@ def VoteDownAns(request):
     if request.method == "GET":
         ans = request.GET['ans']
         ques = request.GET['ques']
-        answer = Answer.objects.get(pk=ans)
-        user = User.objects.get(username=request.session['username'])
-        question = Question.objects.get(pk=ques)
+        answer = get_object_or_404(Answer, pk=ans)
+        user = get_object_or_404(User, username=request.session['username'])
+        question = get_object_or_404(Question, pk=ques)
         if UpVoteAns.objects.filter(user=user, answer=answer).exists():
             obj = UpVoteAns.objects.filter(user=user, answer=answer)
             obj.delete()
