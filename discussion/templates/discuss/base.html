@@ -250,7 +250,7 @@
                     if (cl.indexOf("active")>=0){
                         $.ajax({
                             type : "GET",
-                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            url : "https://discuss-with-us.herokuapp.com/upvoteQues/",
                             data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -264,7 +264,7 @@
                     else{
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteQues/",
+                            url : "https://discuss-with-us.herokuapp.com/upvoteQues/",
                             data : { 'ques' : ques_id },
                             success : function(response){
                                 $this.addClass('active');
@@ -282,7 +282,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteQues",
+                            url : "https://discuss-with-us.herokuapp.com/downvoteQues",
                             data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -293,7 +293,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteQues/",
+                            url : "https://discuss-with-us.herokuapp.com/downvoteQues/",
                             data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
@@ -306,7 +306,7 @@
                     var ques_id = $(this).attr('id');
                     $.ajax({
                         type: "GET",
-                        url : "http://127.0.0.1:8080/starQues/",
+                        url : "https://discuss-with-us.herokuapp.com/starQues/",
                         data : { 'ques' : ques_id },
                         success : function(response){
                             if($('.fa.fa-star.ques[data-id='+ques_id+']').css('color') == 'rgb(0, 0, 0)'){
@@ -333,7 +333,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            url : "https://discuss-with-us.herokuapp.com/upvoteAns/",
                             data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -344,7 +344,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/upvoteAns/",
+                            url : "https://discuss-with-us.herokuapp.com/upvoteAns/",
                             data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -366,7 +366,7 @@
                         $this.removeClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            url : "https://discuss-with-us.herokuapp.com/downvoteAns/",
                             data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -377,7 +377,7 @@
                         $this.addClass('active');
                         $.ajax({
                             type: "GET",
-                            url : "http://127.0.0.1:8080/downvoteAns/",
+                            url : "https://discuss-with-us.herokuapp.com/downvoteAns/",
                             data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
@@ -391,7 +391,7 @@
                     var ques_id = $(this).attr('data-ques-id');
                     $.ajax({
                         type: "GET",
-                        url : "http://127.0.0.1:8080/checkAns/",
+                        url : "https://discuss-with-us.herokuapp.com/checkAns/",
                         data : {'ques' : ques_id, 'ans': ans_id},
                         success : function(response){
                             if($('.fa.fa-check[data-ans-id='+ans_id+']').css('color') == 'rgb(0, 0, 0)'){
