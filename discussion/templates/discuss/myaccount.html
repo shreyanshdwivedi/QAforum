@@ -8,8 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 profileEditor" style="margin-left:15px; box-shadow:0 0 10px #cccccc;">
+                <center>
                 <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:16px; margin-top: -15px;">
-                    <div style="float:left; width:auto;" class="UserImage">
+                    <div style="width:auto;" class="UserImage">
                         <img id="Userimagebig" alt="UserImage" class="Userimagebig" 
                          {% if user.image is None %}
                          src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png"
@@ -18,7 +19,7 @@
                          {% endif %} style="border-radius:50%;"
                          >
 
-                        <div style="position:relative; top:-25px;" class="cameraBtn">
+                        <div style="position:relative; top:-25px; margin-left:25px;" class="cameraBtn">
                             <button type="button" class="btn btn-default btn-sm changeDetails" data-toggle="modal"
                                 data-target="#changeImageModal" id="changeImageButton"
                                 data-tooltip="tooltip" data-placement="bottom" title="Change Image" style="border-radius: 60%; height: 30px; width: 30px;">
@@ -48,7 +49,8 @@
                         </div>
                     </div>
                 </div>
-
+                </center>
+                <br>
                 <br>
                 <!--<div id="left-wrapper-username" style="padding-left: 10px; font-family: 'Tillana', cursive; font-size:22px;">-->
                     <!--<b>{{ user.name }}</b><br/>-->
