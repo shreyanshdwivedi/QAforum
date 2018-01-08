@@ -14,7 +14,7 @@
                          {% if user.image is None %}
                          src="http://res.cloudinary.com/doppel/image/upload/c_thumb,g_face,h_200,r_max,w_200/v1481639812/home-user-icon_je9kjh.png"
                          {% else %}
-                         src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png"
+                         src="{{image_url}}"
                          {% endif %}
                          >
 

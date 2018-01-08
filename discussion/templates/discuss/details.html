@@ -112,12 +112,8 @@
     <div>
         <h3 style="padding-top:20px; text-align:left; margin-left:40px;">Your Answer:</h3> <p> ( Use &lt;br/&gt; for new line ) </p> 
         <form method="post" action="/answer/{{ques.id}}/" style="font-size:22px; text-align:left;">
-             {% csrf_token %}
-            {% for field in answer_form %}
-                <div class="form-group" style="text-align:left;">
-                    {{ field }}
-                </div>
-            {% endfor %}
+            {% csrf_token %}
+            {{ answer_form }}
         <center>
              <input type="submit" class="btn" value="Answer"><br/>
         </center>
