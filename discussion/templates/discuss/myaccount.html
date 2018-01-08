@@ -7,8 +7,8 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4 profileEditor" style=" box-shadow:0 0 10px #cccccc;">
-                <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:16px;">
+            <div class="col-md-4 profileEditor" style="margin-left:15px; box-shadow:0 0 10px #cccccc;">
+                <div style="height: 135px;font-family: 'Satisfy', cursive; font-size:16px; margin-top: -15px;">
                     <div style="float:left; width:auto;" class="UserImage">
                         <img id="Userimagebig" alt="UserImage" class="Userimagebig" 
                          {% if user.image is None %}
@@ -24,8 +24,8 @@
                                 data-tooltip="tooltip" data-placement="bottom" title="Change Image" style="border-radius: 60%; height: 30px; width: 30px;">
                                 <i class="fa fa-camera" aria-hidden="true" style="font-size: 15px; position:relative; left:-3.5px;"></i>
                             </button>
-                         </div>
-                     </div>
+                        </div>
+                    </div>
 
                     <div style="float:left; margin-left: 20px;">
                         <div style="height:40px;"></div>
@@ -50,12 +50,12 @@
                 </div>
 
                 <br>
-                <div id="left-wrapper-username" style="padding-left: 10px; font-family: 'Tillana', cursive; font-size:22px;">
-                    <b>{{ user.name }}</b><br/>
-                    <div style="font-size:18px;" class="profile-bio">{{user.bio|linebreaksbr}}</div>
-                </div>
+                <!--<div id="left-wrapper-username" style="padding-left: 10px; font-family: 'Tillana', cursive; font-size:22px;">-->
+                    <!--<b>{{ user.name }}</b><br/>-->
+                    <!--<div style="font-size:18px;" class="profile-bio">{{user.bio|linebreaksbr}}</div>-->
+                <!--</div>-->
 
-                <hr style="margin-top:-0.25px; border-color:#cccccc; width: 95%;">
+                <!--<hr style="margin-top:-0.25px; border-color:#cccccc; width: 95%;">-->
 
                 <div class="container">
                   <form role="form " action="{% url 'discuss:update' user.id%}" method="post" style="width: 340px; font-family: 'Tillana', cursive;" class="update-form">
