@@ -248,13 +248,13 @@
                     var cl = $(this).attr('class');
                     $('.fa.fa-chevron-down.ques').removeClass('active');
                     if (cl.indexOf("active")>=0){
+                        $this.removeClass('active');
                         $.ajax({
                             type : "GET",
                             url : "https://discuss-with-us.herokuapp.com/upvoteQues/",
                             data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
-                                $this.removeClass('active');
                             },
                             error : function(jqXHR, textStatus, errorThrown){
                                 console.log(textStatus);
@@ -262,12 +262,12 @@
                         });
                     }
                     else{
+                        $this.addClass('active');
                         $.ajax({
                             type: "GET",
                             url : "https://discuss-with-us.herokuapp.com/upvoteQues/",
                             data : { 'ques' : ques_id },
                             success : function(response){
-                                $this.addClass('active');
                                 $('.QuesvoteCount').text(response['total']);
                             }
                         });

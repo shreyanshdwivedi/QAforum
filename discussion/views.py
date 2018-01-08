@@ -455,6 +455,7 @@ def details(request, ques):
         'upvotedAns':upvotedAns,
         'answer_form':answer_form,
 	    'username': username,
+        'user': user,
     }
     return render(request, 'discuss/details.html', context)
 

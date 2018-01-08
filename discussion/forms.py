@@ -39,7 +39,7 @@ class CommentForm(forms.Form):
     comment = forms.CharField(max_length=1000)
 
 class AnswerForm(forms.ModelForm):
-    answer_text = forms.CharField(widget=PagedownWidget)
+    answer_text = forms.CharField(widget=PagedownWidget())
     class Meta:
         model = Answer
         fields = {
