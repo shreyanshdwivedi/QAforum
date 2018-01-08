@@ -294,6 +294,7 @@ def VoteUpQues(request):
         ques = request.GET['ques']
         question = get_object_or_404(Question, pk=ques)
         user = get_object_or_404(User, username=request.session['username'])
+        print(request.session['username'])
         if DownVoteQues.objects.filter(user=user, question=question).exists():
             obj = DownVoteQues.objects.filter(user=user, question=question)
             obj.delete()
@@ -327,6 +328,7 @@ def VoteUpAns(request):
             obj.delete()
             answer.downvotes -= 1
             answer.save()
+
         if UpVoteAns.objects.filter(user=user, answer=answer).exists():
             obj = UpVoteAns.objects.get(user=user, answer=answer)
             obj.delete()
@@ -452,7 +454,7 @@ def details(request, ques):
         'downvotedAns':downvotedAns,
         'upvotedAns':upvotedAns,
         'answer_form':answer_form,
-	'username': username, 
+	    'username': username,
     }
     return render(request, 'discuss/details.html', context)
 
@@ -477,26 +479,27 @@ def comment(request, ques):
         form = CommentForm()
         return HttpResponseRedirect(reverse('discuss:details', args=(ques,)))
 
-def checkAns(request, ans, ques):
-    #if request.method == "GET":
-        #ans = request.GET['ans']
-        #ques = request.GET['ques']
-        answers = Answer.objects.get(pk=ans)
-        question = Question.objects.get(pk=ques)
-        #user = User.objects.get(username =ts.g request.session['username'])
+def checkAns(request):
+    if request.method == "GET":
+        ans = request.GET['ans']
+        ques = request.GET['ques']
+        answers = get_object_or_404(Answer, pk=ans)
+        question = get_object_or_404(Question, pk=ques)
 
         if question.user.username == request.session['username']:
-            if question.is_answered == True:
+            if answers.answer == True:
+                answers.answer = False
+                answers.save()
+                question.is_answered = False
+                question.save()
+            else:
                 obj = Answer.objects.filter(question=question)
                 for answ in obj:
                     if answ.answer == True:
                         answ.answer = False
                         answ.save()
-
-            answers.answer = True
-            answers.save(update_fields=['answer'])
-            question.is_answered = True
-            question.save()
-            return HttpResponseRedirect(reverse('discuss:details', args=(ques,)))
+                answers.answer = True
+                answers.save()
+        return JsonResponse({"stat":"Success"})
 
 

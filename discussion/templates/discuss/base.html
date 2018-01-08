@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -129,7 +129,7 @@
                 margin-top:25px; border-radius:50%; height: 100px; width: 100px;
             }
             .cameraBtn{
-                left:65px; 
+                left:65px;
             }
 
             @media screen and (max-width: 600px)
@@ -157,7 +157,7 @@
                     margin-left: 10px; margin-top: -40px; width: 100%;
                 }
                 .UserImage{
-                    margin-top:25px; border-radius:50%; height: 50px; width: 50px; 
+                    margin-top:25px; border-radius:50%; height: 50px; width: 50px;
                 }
                 .Userimagebig{
                     height: 80px;
@@ -248,23 +248,26 @@
                     var cl = $(this).attr('class');
                     $('.fa.fa-chevron-down.ques').removeClass('active');
                     if (cl.indexOf("active")>=0){
-                        $this.removeClass('active');
                         $.ajax({
-                            type: "GET",
+                            type : "GET",
                             url : "http://127.0.0.1:8080/upvoteQues/",
-                            data : { ques : ques_id },
+                            data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
+                                $this.removeClass('active');
+                            },
+                            error : function(jqXHR, textStatus, errorThrown){
+                                console.log(textStatus);
                             }
                         });
                     }
                     else{
-                        $this.addClass('active');
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/upvoteQues/",
-                            data : { ques : ques_id },
+                            data : { 'ques' : ques_id },
                             success : function(response){
+                                $this.addClass('active');
                                 $('.QuesvoteCount').text(response['total']);
                             }
                         });
@@ -280,7 +283,7 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/downvoteQues",
-                            data : { ques : ques_id },
+                            data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
                             }
@@ -291,7 +294,7 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/downvoteQues/",
-                            data : { ques : ques_id },
+                            data : { 'ques' : ques_id },
                             success : function(response){
                                 $('.QuesvoteCount').text(response['total']);
                             }
@@ -304,7 +307,7 @@
                     $.ajax({
                         type: "GET",
                         url : "http://127.0.0.1:8080/starQues/",
-                        data : { ques : ques_id },
+                        data : { 'ques' : ques_id },
                         success : function(response){
                             if($('.fa.fa-star.ques[data-id='+ques_id+']').css('color') == 'rgb(0, 0, 0)'){
                                 $this.css({ 'color':'#FFD700' });
@@ -331,7 +334,7 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/upvoteAns/",
-                            data : { ans : ans_id, ques: ques_id },
+                            data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
                             }
@@ -342,7 +345,7 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/upvoteAns/",
-                            data : { ans : ans_id, ques: ques_id },
+                            data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
                             }
@@ -364,7 +367,7 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/downvoteAns/",
-                            data : { ans : ans_id, ques: ques_id },
+                            data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
                             }
@@ -375,12 +378,33 @@
                         $.ajax({
                             type: "GET",
                             url : "http://127.0.0.1:8080/downvoteAns/",
-                            data : { ans : ans_id, ques: ques_id },
+                            data : { 'ans' : ans_id, 'ques': ques_id },
                             success : function(response){
                                 $('.ansvoteCount[data-id='+ans_id+']').text(response['total']);
                             }
                         });
                     }
+               });
+               $(document).on('click', ".fa.fa-check", function(){
+                    var $this = $(this);
+                    var ans_id = $(this).attr('data-ans-id');
+                    var ques_id = $(this).attr('data-ques-id');
+                    $.ajax({
+                        type: "GET",
+                        url : "http://127.0.0.1:8080/checkAns/",
+                        data : {'ques' : ques_id, 'ans': ans_id},
+                        success : function(response){
+                            if($('.fa.fa-check[data-ans-id='+ans_id+']').css('color') == 'rgb(0, 0, 0)'){
+                                $this.css({ 'color':'green' });
+                            }
+                            else{
+                                $this.css({ 'color':'black' });
+                            }
+                        },
+                        error: function(response){
+                            console.log(ans_id + " " + ques_id + " " + response);
+                        }
+                    });
                });
             })
         </script>
