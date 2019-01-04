@@ -38,7 +38,7 @@
                 "sha256:9c60f4a801bf7c26bd6824c1062550c12c373344116703461c18cc258f8c9320",
                 "sha256:46b868d68e5fd69dd9e05a0a7900df91786097e30b2aa6f065dd7fa3b22f7005"
             ],
-            "version": "==1.10"
+            "version": ">=1.10.8"
         },
         "django-pagedown": {
             "hashes": [
@@ -87,7 +87,7 @@
                 "sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b",
                 "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
             ],
-            "version": "==1.22"
+            "version": ">=1.23"
         },
         "virtualenv": {
             "hashes": [
